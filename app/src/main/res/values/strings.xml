@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TestProject</string>
+    <string name="upcomingmovie">UpComingMovie</string>
+    <string name="popular_movie">Popular Movie</string>
+    <string name="Movie">Movie App</string>
+    <string name="text_no_connectivity">no connectivity</string>
+    <string name="text_connectivity">connection is back</string>
+    <string name="error_text">Something went wrong! Click here to try Again.</string>
+</resources>

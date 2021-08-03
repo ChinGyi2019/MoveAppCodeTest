@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+  <ScrollView
+      android:background="@color/color_primary"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        tools:context=".feature.details.DetailsActivity">
+
+      <ImageView
+          android:id="@+id/backDrop"
+          android:layout_width="0dp"
+          android:layout_height="350dp"
+          android:scaleType="fitXY"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:src="@tools:sample/avatars" />
+
+<!--      <View-->
+<!--          android:id="@+id/view"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="350dp"-->
+<!--          android:background="@color/black"-->
+<!--          android:alpha="0.2"-->
+<!--          app:layout_constraintBottom_toBottomOf="@+id/backDrop"-->
+<!--          app:layout_constraintEnd_toEndOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent"-->
+<!--          app:layout_constraintTop_toTopOf="@+id/backDrop" />-->
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/titleView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="24dp"
+          android:layout_marginEnd="24dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/backDrop"
+          app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/movie_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Movie Name" />
+
+        <TextView
+            android:id="@+id/durationTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="duration"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_Title" />
+
+        <RatingBar
+            android:id="@+id/detailRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/color_yellow"
+            android:stepSize="0.1"
+            app:layout_constraintBottom_toBottomOf="@+id/durationTv"
+            app:layout_constraintStart_toEndOf="@+id/durationTv"
+            app:layout_constraintTop_toTopOf="@+id/durationTv" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/aboutFilmView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/durationTv">
+
+          <LinearLayout
+              android:id="@+id/originalTitleView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:weightSum="5"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/original_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="2"
+                android:text="original title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_Title" />
+
+            <TextView
+                android:id="@+id/original_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="3"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_Title" />
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/descriptionView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:weightSum="5"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/originalTitleView">
+
+            <TextView
+                android:id="@+id/description_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="2"
+                android:text="Description"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_Title" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="3"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_Title" />
+          </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <ImageView
+          android:id="@+id/backBtn"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="32dp"
+          android:src="@drawable/back_btn_ic"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+      <ImageView
+          android:id="@+id/favouriteBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="32dp"
+          android:layout_marginEnd="24dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_favourite_hole" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </ScrollView>
+
+</layout>
