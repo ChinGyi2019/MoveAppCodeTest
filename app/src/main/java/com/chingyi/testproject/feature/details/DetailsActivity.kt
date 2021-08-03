@@ -18,28 +18,35 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
+    //MARK:- Properties
+
     private lateinit var binding : DetailActivityBinding
     private val viewModel by viewModels<HomeViewModel>()
     var movieID : String? = ""
+
+
+    //MARK:- View Cycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DetailActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //Listen data from Main
         val bundle: Bundle? = intent.extras
         movieID  = bundle?.getString("movieID")
         val movieType : String? = bundle?.getString("movieType")
         movieID?.toInt()?.let {
+            //Call Detail
             viewModel.getMovieDetails(it, movieType.toString())
         }
-
+        //BindDetailView
         setUpMovieDetails()
-
+        //OnClick
         backBtnClick()
 
 
 
     }
+    //MARK:- BindData
     private fun setUpMovieDetails(){
         viewModel.movieDetail.observe(this){viewState->
             when (viewState) {
@@ -56,6 +63,7 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
         }
+
     private fun bindMovieDetails(movie : Movie){
         binding.apply {
             movieTitle.text = movie.originalTitle
@@ -81,7 +89,7 @@ class DetailsActivity : AppCompatActivity() {
         }
 
     }
-
+    //MARK:- Favorite Action
     private  fun favouriteAction(id : Long){
         var toogle = false
 

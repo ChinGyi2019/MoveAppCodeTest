@@ -30,6 +30,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    //MARK:- ViewModel's Properties
     private lateinit var binding : ActivityMainBinding
     private val homeViewModel by viewModels<HomeViewModel>()
 
@@ -42,23 +43,28 @@ class MainActivity : AppCompatActivity() {
     lateinit var  networkUtils : NetworkUtils
     private var connectionState = false
 
+    //MARK:- View Life Cycle
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //View Start
         initView()
+         //fetchData
         fetchDataFromNetwork()
-
+        //Bind to View
         bindUpComingMovies()
         bindPopularMovies()
-
+        //OnClick
         onClickMovie()
+        //Error Handle
         handleNetworkChange()
-
         retryState()
 
 
     }
+
+    //MARK: - View Init
     private  fun initView(){
         popularMovieAdapter = MoviesRecyclerAdapter(appExecutors = appExecutors)
         upComingMovieAdapter = MoviesRecyclerAdapter(appExecutors = appExecutors)
@@ -104,7 +110,61 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun showLoading(){
+        binding.upcomingView.hide()
+        binding.popularView.hide()
+        binding.progressBar.show()
+    }
+    private fun endLoading(){
+        binding.errorTv.hide()
+        binding.popularMovieTextView.show()
+        binding.upComingMovieTextView.show()
+        binding.upcomingView.show()
+        binding.popularView.show()
+        binding.progressBar.hide()
+
+    }
+    private fun isError(){
+        binding.popularMovieTextView.hide()
+        binding.upComingMovieTextView.hide()
+        binding.upcomingView.hide()
+        binding.popularView.hide()
+        binding.progressBar.hide()
+
+        binding.errorTv.text = getString(R.string.error_text)
+        binding.errorTv.show()
+
+    }
+    //On Movie Click
+    private fun onClickMovie(){
+        //UpComing Movie Click
+        upComingMovieAdapter.movieItemClick = { movie->
+            Timber.e(movie.id.toString())
+            val id = movie.id.toString()
+            val movieType = movie.movieType
+            val intent= Intent(this,DetailsActivity::class.java)
+            intent.putExtra("movieID",id)
+            intent.putExtra("movieType",movieType)
+            startActivity(intent)
+
+        }
+
+        //Popular Movie Click
+        popularMovieAdapter.movieItemClick = { movie->
+            Timber.e(movie.id.toString())
+            val id = movie.id.toString()
+            val movieType = movie.movieType
+            val intent= Intent(this,DetailsActivity::class.java)
+
+            intent.putExtra("movieID",id)
+            intent.putExtra("movieType",movieType)
+            startActivity(intent)
+
+        }
+    }
+
     //MARK:- Network
+
     private fun fetchDataFromNetwork(){
         homeViewModel.getUpComingMovieList()
         homeViewModel.getPopularMovieList()
@@ -133,7 +193,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    //Bind Data to View
     private fun bindPopularMovies() {
         homeViewModel.popularMovieList.observe(this) { viewState->
             when (viewState) {
@@ -160,58 +220,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onClickMovie(){
-        //UpComing Movie Click
-        upComingMovieAdapter.movieItemClick = { movie->
-            Timber.e(movie.id.toString())
-            val id = movie.id.toString()
-            val movieType = movie.movieType
-            val intent= Intent(this,DetailsActivity::class.java)
-            intent.putExtra("movieID",id)
-            intent.putExtra("movieType",movieType)
-            startActivity(intent)
 
-        }
 
-        //Popular Movie Click
-        popularMovieAdapter.movieItemClick = { movie->
-            Timber.e(movie.id.toString())
-            val id = movie.id.toString()
-            val movieType = movie.movieType
-            val intent= Intent(this,DetailsActivity::class.java)
-
-            intent.putExtra("movieID",id)
-            intent.putExtra("movieType",movieType)
-            startActivity(intent)
-
-        }
-    }
-    private fun showLoading(){
-        binding.upcomingView.hide()
-        binding.popularView.hide()
-        binding.progressBar.show()
-    }
-    private fun endLoading(){
-        binding.errorTv.hide()
-        binding.popularMovieTextView.show()
-        binding.upComingMovieTextView.show()
-        binding.upcomingView.show()
-        binding.popularView.show()
-        binding.progressBar.hide()
-
-    }
-    private fun isError(){
-        binding.popularMovieTextView.hide()
-        binding.upComingMovieTextView.hide()
-        binding.upcomingView.hide()
-        binding.popularView.hide()
-        binding.progressBar.hide()
-
-        binding.errorTv.text = getString(R.string.error_text)
-        binding.errorTv.show()
-
-    }
-
+    //Handle Network Change
     @SuppressLint("ResourceType")
     private fun handleNetworkChange(){
         networkUtils.getNetworkLiveData(this).observe(this ) { isConnected ->
@@ -261,6 +272,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Retry State
     private fun retryState(){
         binding.errorTv.setOnClickListener {
             if(!connectionState) {

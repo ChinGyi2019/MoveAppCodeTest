@@ -25,6 +25,7 @@ class HomeViewModel @Inject constructor(
     private val favouriteRepository : FavouriteMovieRepository)
 : ViewModel() {
 
+    //MARK:- ViewModel's Properties
     private var _upComingMovieList  = ViewStateLiveData<List<Movie>>()
     val upComingMovieList : ViewStateLiveData<List<Movie>>  get() =  _upComingMovieList
 
@@ -36,7 +37,7 @@ class HomeViewModel @Inject constructor(
 
     val isFavourite =  MutableLiveData<Boolean>()
 
-
+    //MARK:- MOVIE
     fun getUpComingMovieList() {
 
         _upComingMovieList.postLoading()
@@ -92,7 +93,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
+    //MARK:- Favourite Movie
     suspend fun setMovieFavourite(movie : MovieFavourite){
         favouriteRepository.setMovieFavourite(movieFavourite = movie)
     }
